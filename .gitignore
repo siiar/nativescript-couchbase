@@ -1,0 +1,9 @@
+node_modules/
+hooks/
+
+demo/node_modules/
+demo/platforms/
+
+.DS_Store*
+Thumbs.db*
+~*

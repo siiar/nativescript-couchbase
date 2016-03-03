@@ -1,0 +1,12 @@
+{
+  "nativescript": {
+    "id": "org.nativescript.CouchbaseProject",
+    "tns-android": {
+      "version": "1.6.3"
+    }
+  },
+  "dependencies": {
+    "nativescript-couchbase": "file:../nativescript-couchbase",
+    "tns-core-modules": "1.6.2"
+  }
+}

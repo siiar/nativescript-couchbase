@@ -1,0 +1,15 @@
+<Page loaded="pageLoaded">
+    <Page.actionBar>
+		<ActionBar title="New Person">
+			<ActionBar.actionItems>
+				<ActionItem text="Save" tap="save" ios.position="right" />
+			</ActionBar.actionItems>
+		</ActionBar>
+	</Page.actionBar>
+    <StackLayout>
+        <Label text="First Name" />
+        <TextField id="firstname" />
+        <Label text="Last Name" />
+        <TextField id="lastname" />
+    </StackLayout>
+</Page>
