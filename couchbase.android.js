@@ -94,9 +94,10 @@ var Couchbase = (function () {
     };
     Couchbase.prototype.addDatabaseChangeListener = function (callback) {
         try {
+            var self = this;
             this.database.addChangeListener(new com.couchbase.lite.Database.ChangeListener({
                 changed: function (event) {
-                    callback(event);
+                    callback(self.mapToObject(event.getChanges()));
                 }
             }));
         }

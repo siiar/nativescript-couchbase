@@ -105,9 +105,10 @@ export class Couchbase {
 
     addDatabaseChangeListener(callback: any) {
         try {
+            var self = this;
             this.database.addChangeListener(new com.couchbase.lite.Database.ChangeListener({
                 changed(event) {
-                    callback(event);
+                    callback(self.mapToObject(event.getChanges()));
                 }
             }));
         } catch (exception) {

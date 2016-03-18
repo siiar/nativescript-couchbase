@@ -23,7 +23,7 @@ function pageLoaded(args) {
     pull.start();
 
     database.addDatabaseChangeListener(function(event) {
-        console.log("CHANGE", JSON.stringify(event.getChanges()));
+        console.log("CHANGE", JSON.stringify(event));
     });
 
     refresh();
