@@ -1,0 +1,2 @@
+LIBRARY_SEARCH_PATHS = $(SRCROOT)/../../lib/iOS
+OTHER_LDFLAGS=$(inherited) –framework CFNetwork -framework Security –framework SystemConfiguration -lsqlite3

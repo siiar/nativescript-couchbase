@@ -3,6 +3,7 @@ hooks/
 
 demo/node_modules/
 demo/platforms/
+demo/lib
 
 .DS_Store*
 Thumbs.db*
