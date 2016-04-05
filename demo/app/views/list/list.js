@@ -15,10 +15,17 @@ function pageLoaded(args) {
         emitter.emit(JSON.parse(document)._id, document);
     });
 
-    var push = database.createPushReplication("http://192.168.57.1:4984/test-database");
-    var pull = database.createPullReplication("http://192.168.57.1:4984/test-database");
-    push.setContinuous(true);
-    pull.setContinuous(true);
+    var push = database.createPushReplication("http://localhost:4984/test-database");
+    var pull = database.createPullReplication("http://localhost:4984/test-database");
+
+    if (page.ios){
+        push.continuous = true;
+        pull.continuous = true;
+    }
+    else{
+      push.setContinuous(true);
+      pull.setContinuous(true);
+    }
     push.start();
     pull.start();
 
@@ -32,11 +39,13 @@ function pageLoaded(args) {
 
 function refresh() {
     personList.splice(0);
+
     var rows = database.executeQuery("people");
+
     for(var i in rows) {
-        if(rows.hasOwnProperty(i)) {
-            personList.push(JSON.parse(rows[i]));
-        }
+          if(rows.hasOwnProperty(i)) {
+              personList.push(JSON.parse(rows[i]));
+          }
     }
 }
 

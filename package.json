@@ -6,7 +6,7 @@
   "nativescript": {
     "platforms": {
       "android": "1.4.0",
-      "ios": "1.4.0"
+      "ios": "1.5.1"
     }
   },
   "repository": {
