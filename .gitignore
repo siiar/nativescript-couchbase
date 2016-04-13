@@ -5,6 +5,8 @@ demo/node_modules/
 demo/platforms/
 demo/lib
 
+npm_debug.log
+
 .DS_Store*
 Thumbs.db*
 ~*
