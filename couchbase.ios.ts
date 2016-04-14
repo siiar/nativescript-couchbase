@@ -101,7 +101,7 @@ export class Couchbase {
           console.error("PULL ERROR");
         }
 
-        return replication;
+        return new Replicator(replication);
     }
 
     createPushReplication(remoteUrl: string) {
@@ -113,7 +113,7 @@ export class Couchbase {
            console.error("PUSH ERROR");
         }
 
-        return replication;
+        return new Replicator(replication);;
     }
 
     addDatabaseChangeListener(callback: any) {
@@ -141,4 +141,22 @@ export class Couchbase {
 
       return jsonString;
     }
+}
+
+export class Replicator {
+
+    replicator: any;
+
+    constructor(replicator: any) {
+        this.replicator = replicator;
+    }
+
+    start() {
+        this.replicator.start();
+    }
+
+    setContinuous(isContinuous: boolean) {
+        this.replicator.continuous = isContinuous;
+    }
+
 }

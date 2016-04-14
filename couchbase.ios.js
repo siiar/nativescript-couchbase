@@ -74,7 +74,7 @@ var Couchbase = (function () {
         if (!replication) {
             console.error("PULL ERROR");
         }
-        return replication;
+        return new Replicator(replication);
     };
     Couchbase.prototype.createPushReplication = function (remoteUrl) {
         var url = NSURL.URLWithString(remoteUrl);
@@ -82,7 +82,8 @@ var Couchbase = (function () {
         if (!replication) {
             console.error("PUSH ERROR");
         }
-        return replication;
+        return new Replicator(replication);
+        ;
     };
     Couchbase.prototype.addDatabaseChangeListener = function (callback) {
         NSNotificationCenter.defaultCenter().addObserverForNameObjectQueueUsingBlock(kCBLReplicationChangeNotification, null, NSOperationQueue.mainQueue(), function (notification) {
@@ -105,3 +106,16 @@ var Couchbase = (function () {
     return Couchbase;
 }());
 exports.Couchbase = Couchbase;
+var Replicator = (function () {
+    function Replicator(replicator) {
+        this.replicator = replicator;
+    }
+    Replicator.prototype.start = function () {
+        this.replicator.start();
+    };
+    Replicator.prototype.setContinuous = function (isContinuous) {
+        this.replicator.continuous = isContinuous;
+    };
+    return Replicator;
+}());
+exports.Replicator = Replicator;
