@@ -90,7 +90,7 @@ export class Couchbase {
         } catch (exception) {
             console.error("PULL ERROR", exception.message);
         }
-        return replication;
+        return new Replicator(replication);
     }
 
     createPushReplication(remoteUrl: string) {
@@ -100,7 +100,7 @@ export class Couchbase {
         } catch (exception) {
             console.error("PUSH ERROR", exception.message);
         }
-        return replication;
+        return new Replicator(replication);
     }
 
     addDatabaseChangeListener(callback: any) {
@@ -108,7 +108,8 @@ export class Couchbase {
             var self = this;
             this.database.addChangeListener(new com.couchbase.lite.Database.ChangeListener({
                 changed(event) {
-                    callback(self.mapToObject(event.getChanges()));
+                    let changes: Array<any> = event.getChanges().toArray();
+                    callback(changes);
                 }
             }));
         } catch (exception) {
@@ -129,6 +130,24 @@ export class Couchbase {
     private mapToObject(data: Object) {
         var gson = (new com.google.gson.GsonBuilder()).create();
         return JSON.parse(gson.toJson(data));
+    }
+
+}
+
+export class Replicator {
+
+    replicator: any;
+
+    constructor(replicator: any) {
+        this.replicator = replicator;
+    }
+
+    start() {
+        this.replicator.start();
+    }
+
+    setContinuous(isContinuous: boolean) {
+        this.replicator.setContinuous(isContinuous);
     }
 
 }

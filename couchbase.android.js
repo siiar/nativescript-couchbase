@@ -80,7 +80,7 @@ var Couchbase = (function () {
         catch (exception) {
             console.error("PULL ERROR", exception.message);
         }
-        return replication;
+        return new Replicator(replication);
     };
     Couchbase.prototype.createPushReplication = function (remoteUrl) {
         var replication;
@@ -90,14 +90,15 @@ var Couchbase = (function () {
         catch (exception) {
             console.error("PUSH ERROR", exception.message);
         }
-        return replication;
+        return new Replicator(replication);
     };
     Couchbase.prototype.addDatabaseChangeListener = function (callback) {
         try {
             var self = this;
             this.database.addChangeListener(new com.couchbase.lite.Database.ChangeListener({
                 changed: function (event) {
-                    callback(self.mapToObject(event.getChanges()));
+                    var changes = event.getChanges().toArray();
+                    callback(changes);
                 }
             }));
         }
@@ -118,5 +119,18 @@ var Couchbase = (function () {
         return JSON.parse(gson.toJson(data));
     };
     return Couchbase;
-})();
+}());
 exports.Couchbase = Couchbase;
+var Replicator = (function () {
+    function Replicator(replicator) {
+        this.replicator = replicator;
+    }
+    Replicator.prototype.start = function () {
+        this.replicator.start();
+    };
+    Replicator.prototype.setContinuous = function (isContinuous) {
+        this.replicator.setContinuous(isContinuous);
+    };
+    return Replicator;
+}());
+exports.Replicator = Replicator;

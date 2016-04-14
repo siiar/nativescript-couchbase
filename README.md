@@ -126,7 +126,9 @@ Data will now continuously be replicated between the local device and Sync Gatew
 ### Listening for Changes
 
 ```javascript
-database.addDatabaseChangeListener(function(event) {
-    console.log("CHANGE", JSON.stringify(event.getChanges()));
+database.addDatabaseChangeListener(function(changes) {
+    for(var i = 0; i < changes.length; i++) {
+        console.log(changes[i].getDocumentId());
+    }
 });
 ```
