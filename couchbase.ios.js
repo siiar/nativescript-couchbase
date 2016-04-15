@@ -87,7 +87,15 @@ var Couchbase = (function () {
     };
     Couchbase.prototype.addDatabaseChangeListener = function (callback) {
         NSNotificationCenter.defaultCenter().addObserverForNameObjectQueueUsingBlock(kCBLReplicationChangeNotification, null, NSOperationQueue.mainQueue(), function (notification) {
-            callback(notification);
+            var ids = [];
+            var replication = notification.object;
+            var documentIDs = replication.pendingDocumentIDs;
+            if (documentIDs.allObjects.count > 0) {
+                for (var i = 0; i < documentIDs.allObjects.count; i++) {
+                    ids.push(documentIDs.allObjects.objectAtIndex(i));
+                }
+                callback(ids);
+            }
         });
     };
     Couchbase.prototype.destroyDatabase = function () {

@@ -27,8 +27,17 @@ function pageLoaded(args) {
     database.addDatabaseChangeListener(function(changes) {
         var changeIndex;
         for(var i = 0; i < changes.length; i++) {
-            changeIndex = indexOfObjectId(changes[i].getDocumentId(), personList);
-            var document = database.getDocument(changes[i].getDocumentId());
+            var documentId;
+
+            if (page.ios){
+                documentId = changes[i];
+            }
+            else{
+                documentId = changes[i].getDocumentId();
+            }
+            changeIndex = indexOfObjectId(documentId, personList);
+            var document = database.getDocument(documentId);
+
             if(changeIndex == -1) {
                 personList.push(document);
             } else {
