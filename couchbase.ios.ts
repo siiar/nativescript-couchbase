@@ -95,7 +95,7 @@ export class Couchbase {
     createPullReplication(remoteUrl: string) {
         var url = NSURL.URLWithString(remoteUrl);
 
-        var replication = this.database.createPushReplication(url);
+        var replication = this.database.createPullReplication(url);
 
         if (!replication){
           console.error("PULL ERROR");
@@ -117,18 +117,18 @@ export class Couchbase {
     }
 
     addDatabaseChangeListener(callback: any) {
-      NSNotificationCenter.defaultCenter().addObserverForNameObjectQueueUsingBlock(kCBLReplicationChangeNotification, null,NSOperationQueue.mainQueue(), function(notification){
+      NSNotificationCenter.defaultCenter().addObserverForNameObjectQueueUsingBlock(kCBLDatabaseChangeNotification, null,NSOperationQueue.mainQueue(), function(notification){
             var ids = [];
-            var replication = notification.object;
-            var documentIDs = replication.pendingDocumentIDs;
-
-            if (documentIDs.allObjects.count > 0){
-              for (var i =0; i < documentIDs.allObjects.count; i++){
-                  ids.push(documentIDs.allObjects.objectAtIndex(i));
+            if (notification.userInfo){
+              var changes = notification.userInfo["changes"];
+              if (changes){
+                for (var i = 0; i < changes.count; i++){
+                    ids.push(changes[i].changes);
+                }
+                callback(ids);
               }
-              callback(ids);
             }
-      });
+        });
     }
 
     destroyDatabase() {
