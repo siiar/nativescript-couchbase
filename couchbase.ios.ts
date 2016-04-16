@@ -129,7 +129,7 @@ export class Couchbase {
               if (changes != null){
 
                 for (var i = 0; i < changes.count; i++){
-                    ids.push(changes[i].changes);
+                    ids.push(changes[i].documentID);
                 }
                 callback(ids);
               }
