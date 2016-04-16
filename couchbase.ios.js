@@ -23,7 +23,10 @@ var Couchbase = (function () {
     };
     Couchbase.prototype.getDocument = function (documentId) {
         var document = this.database.documentWithID(documentId);
-        return JSON.parse(this.mapToJson(document.properties));
+        if (document) {
+            return JSON.parse(this.mapToJson(document.properties));
+        }
+        return null;
     };
     Couchbase.prototype.updateDocument = function (documentId, data) {
         var document = this.database.documentWithID(documentId);
@@ -86,11 +89,12 @@ var Couchbase = (function () {
         ;
     };
     Couchbase.prototype.addDatabaseChangeListener = function (callback) {
+        var self = this;
         NSNotificationCenter.defaultCenter().addObserverForNameObjectQueueUsingBlock(kCBLDatabaseChangeNotification, null, NSOperationQueue.mainQueue(), function (notification) {
             var ids = [];
             if (notification.userInfo) {
-                var changes = notification.userInfo["changes"];
-                if (changes) {
+                var changes = notification.userInfo.objectForKey("changes");
+                if (changes != null) {
                     for (var i = 0; i < changes.count; i++) {
                         ids.push(changes[i].changes);
                     }

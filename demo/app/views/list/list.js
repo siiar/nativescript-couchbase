@@ -25,6 +25,8 @@ function pageLoaded(args) {
     pull.start();
 
     database.addDatabaseChangeListener(function(changes) {
+        console.log(changes);
+
         var changeIndex;
         for(var i = 0; i < changes.length; i++) {
             var documentId;
@@ -35,6 +37,7 @@ function pageLoaded(args) {
             else{
                 documentId = changes[i].getDocumentId();
             }
+
             changeIndex = indexOfObjectId(documentId, personList);
             var document = database.getDocument(documentId);
 
