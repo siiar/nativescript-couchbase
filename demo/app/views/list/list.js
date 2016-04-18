@@ -31,13 +31,7 @@ function pageLoaded(args) {
         for(var i = 0; i < changes.length; i++) {
             var documentId;
 
-            if (page.ios){
-                documentId = changes[i];
-            }
-            else{
-                documentId = changes[i].getDocumentId();
-            }
-
+            documentId = changes[i].getDocumentId();
             changeIndex = indexOfObjectId(documentId, personList);
             var document = database.getDocument(documentId);
 

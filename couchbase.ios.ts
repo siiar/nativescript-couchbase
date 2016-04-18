@@ -1,3 +1,14 @@
+declare var CBLManager: any;
+declare var interop: any;
+declare var NSURL: any;
+declare var NSNotificationCenter: any;
+declare var NSOperationQueue: any;
+declare var NSJSONSerialization: any;
+declare var kCBLDatabaseChangeNotification: any;
+declare var NSString: any;
+declare var NSJSONWritingPrettyPrinted: any;
+declare var NSUTF8StringEncoding: any;
+
 export class Couchbase {
 
     private manager: any;
@@ -122,16 +133,15 @@ export class Couchbase {
     addDatabaseChangeListener(callback: any) {
       var self = this;
       NSNotificationCenter.defaultCenter().addObserverForNameObjectQueueUsingBlock(kCBLDatabaseChangeNotification, null,NSOperationQueue.mainQueue(), function(notification){
-            var ids = [];
+            var changesList = [];
             if (notification.userInfo){
               var changes = notification.userInfo.objectForKey("changes");
 
               if (changes != null){
-
-                for (var i = 0; i < changes.count; i++){
-                    ids.push(changes[i].documentID);
+                for (var i = 0; i < changes.count; i++) {
+                    changesList.push(new DatabaseChange(changes[i]));
                 }
-                callback(ids);
+                callback(changesList);
               }
             }
         });
@@ -172,6 +182,24 @@ export class Replicator {
 
     setContinuous(isContinuous: boolean) {
         this.replicator.continuous = isContinuous;
+    }
+
+}
+
+export class DatabaseChange {
+
+    change: any;
+
+    constructor(change: any) {
+        this.change = change;
+    }
+
+    getDocumentId() {
+        return this.change.documentID;
+    }
+
+    getRevisionId() {
+        return this.change.revisionID;
     }
 
 }

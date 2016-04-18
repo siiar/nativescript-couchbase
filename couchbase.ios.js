@@ -91,14 +91,14 @@ var Couchbase = (function () {
     Couchbase.prototype.addDatabaseChangeListener = function (callback) {
         var self = this;
         NSNotificationCenter.defaultCenter().addObserverForNameObjectQueueUsingBlock(kCBLDatabaseChangeNotification, null, NSOperationQueue.mainQueue(), function (notification) {
-            var ids = [];
+            var changesList = [];
             if (notification.userInfo) {
                 var changes = notification.userInfo.objectForKey("changes");
                 if (changes != null) {
                     for (var i = 0; i < changes.count; i++) {
-                        ids.push(changes[i].documentID);
+                        changesList.push(new DatabaseChange(changes[i]));
                     }
-                    callback(ids);
+                    callback(changesList);
                 }
             }
         });
@@ -132,3 +132,16 @@ var Replicator = (function () {
     return Replicator;
 }());
 exports.Replicator = Replicator;
+var DatabaseChange = (function () {
+    function DatabaseChange(change) {
+        this.change = change;
+    }
+    DatabaseChange.prototype.getDocumentId = function () {
+        return this.change.documentID;
+    };
+    DatabaseChange.prototype.getRevisionId = function () {
+        return this.change.revisionID;
+    };
+    return DatabaseChange;
+}());
+exports.DatabaseChange = DatabaseChange;
