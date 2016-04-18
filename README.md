@@ -10,7 +10,7 @@ Because this plugin is experimental, it has not yet been added to the NPM reposi
 cd nativescript-couchbase-plugin/demo
 npm install
 tns platform add android
-tns plugin add ../
+tns plugin add nativescript-couchbase
 ```
 
 This will download all the dependencies for the included demo project, add the Android build platform, and install the Couchbase plugin from the parent directory.
