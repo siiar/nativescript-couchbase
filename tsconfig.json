@@ -8,8 +8,9 @@
         "removeComments": false,
         "noImplicitAny": false
     },
-    "exclude": [
-        "node_modules",
-        "platforms"
+    "files": [
+        "demo/node_modules/tns-core-modules/tns-core-modules.d.ts",
+        "couchbase.android.ts",
+        "couchbase.ios.ts"
     ]
 }

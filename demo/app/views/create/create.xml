@@ -2,7 +2,7 @@
     <Page.actionBar>
 		<ActionBar title="New Person">
 			<ActionBar.actionItems>
-				<ActionItem text="Save" tap="save" ios.position="right" />
+				<ActionItem text="Save" tap="{{ save }}" ios.position="right" />
 			</ActionBar.actionItems>
 		</ActionBar>
 	</Page.actionBar>
