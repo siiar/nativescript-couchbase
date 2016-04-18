@@ -10,3 +10,5 @@ npm_debug.log
 .DS_Store*
 Thumbs.db*
 ~*
+*.js
+*.js.map
