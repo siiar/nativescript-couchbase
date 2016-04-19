@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "nativescript-couchbase": "file:..",
-    "tns-core-modules": "1.6.2"
+    "tns-core-modules": "1.7.1"
   },
   "devDependencies": {
     "nativescript-dev-typescript": "^0.3.1",
