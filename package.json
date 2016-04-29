@@ -1,6 +1,6 @@
 {
   "name": "nativescript-couchbase",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Couchbase Lite plugin for Telerik NativeScript",
   "main": "couchbase.js",
   "nativescript": {
@@ -28,8 +28,5 @@
     "nativescript"
   ],
   "author": "Nic Raboy",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "tns-core-modules": "^1.7.1"
-  }
+  "license": "Apache-2.0"
 }
