@@ -71,7 +71,13 @@ var isDeleted = database.deleteDocument(documentId);
 ### Reading an attachment
 Returns a stream android : InputStream  
 ```js
-var photo = database.getAttachment("docId","fileId");
+database.getAttachment("docId","fileId").
+then((stream)=>{
+    var fileStream = stream;
+})
+.catch((error)=>{
+    console.log(error)
+})
 ```
 
 ### Creating an attachment

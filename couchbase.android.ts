@@ -132,6 +132,16 @@ export class Couchbase {
         return JSON.parse(gson.toJson(data));
     }
 
+    private getPath(uri) {
+        let cursor = applicationModule.android.currentContext.getContentResolver().query(uri, null, null, null, null);
+        if (cursor == null) return null;
+        let column_index = cursor.getColumnIndexOrThrow(android.provider.MediaStore.MediaColumns.DATA);
+        cursor.moveToFirst();
+        let s = cursor.getString(column_index);
+        cursor.close();
+        return s;
+    }
+
     getAttachment(documentId: string, attachmentId: string): Promise<any> {
         return new Promise((resolve, reject) => {
             let document = this.database.getDocument(documentId);
@@ -149,9 +159,9 @@ export class Couchbase {
         return new Promise((resolve, reject) => {
             let document = this.database.getDocument(documentId);
             let newRev = document.getCurrentRevision().createRevision();
-            if (file.substr(0, 10).indexOf('content://') > -1) {
-                let stream = applicationModule.android.application.android.context.getContentResolver().openInputStream(file);
-                let fileExtension = android.webkit.MimeTypeMap.getFileExtensionFromUrl(file);
+            if (file.toString().substr(0, 10).indexOf('content://') > -1) {
+                let stream = applicationModule.android.context.getContentResolver().openInputStream(file);
+                let fileExtension = android.webkit.MimeTypeMap.getFileExtensionFromUrl(this.getPath(file));
                 let mimeType = android.webkit.MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
                 try {
                     newRev.setAttachment(attachmentId, mimeType, stream);
@@ -161,8 +171,8 @@ export class Couchbase {
                     reject(exception.message);
                 }
 
-            } else if (file.substr(0, 7).indexOf('file://') > -1) {
-                let stream = applicationModule.android.application.android.context.getContentResolver().openInputStream(android.net.Uri.fromFile(file));
+            } else if (file.toString().substr(0, 7).indexOf('file://') > -1) {
+                let stream = applicationModule.android.context.getContentResolver().openInputStream(android.net.Uri.fromFile(file));
                 let fileExtension = android.webkit.MimeTypeMap.getFileExtensionFromUrl(file);
                 let mimeType = android.webkit.MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
                 try {
@@ -174,7 +184,7 @@ export class Couchbase {
                 }
             } else if (file.substr(0, 2).indexOf('~/') > -1) {
                 let path = fs.path.join(fs.knownFolders.currentApp().path, file.replace('~/', ''));
-                let stream = application.android.context.getContentResolver().openInputStream(android.net.Uri.fromFile(new java.io.File(path)));
+                let stream = applicationModule.android.context.getContentResolver().openInputStream(android.net.Uri.fromFile(new java.io.File(path)));
                 let fileExtension = android.webkit.MimeTypeMap.getFileExtensionFromUrl(path);
                 let mimeType = android.webkit.MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
                 try {
