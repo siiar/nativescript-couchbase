@@ -68,30 +68,6 @@ database.updateDocument(documentId, {
 var isDeleted = database.deleteDocument(documentId);
 ```
 
-### Reading an attachment
-Returns a stream android : InputStream  
-```js
-database.getAttachment("docId","fileId").
-then((stream)=>{
-    var fileStream = stream;
-})
-.catch((error)=>{
-    console.log(error)
-})
-```
-
-### Creating an attachment
-```js
-var file = "~/photos/triniwiz.jpg"  //android : localFile || nativeFile || Uri
-
-database.setAttachment("docId","fileId",file);
-```
-
-### Deleting an attachment
-```js
-database.removeAttachment("docId","fileId");
-```
-
 ### Querying with MapReduce Views
 
 Knowing the document id isn't always an option.  With this in mind, multiple documents can be queried using criteria defined in a view.
