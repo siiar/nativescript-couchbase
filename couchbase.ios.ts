@@ -95,14 +95,13 @@ export class Couchbase {
       var index = 0;
 
       while(row){
-         results[index++] = row.value;
+         results[row.key] = row.value;
          row = resultSet.nextRow();
        }
 
        if (!errorRef){
            console.log(errorRef.value);
        }
-
        return results;
     }
 
@@ -157,7 +156,7 @@ export class Couchbase {
         }
     }
 
-    mapToJson(properties: Object){
+    private mapToJson(properties: Object){
       var errorRef = new interop.Reference();
 
       var data = NSJSONSerialization.dataWithJSONObjectOptionsError(properties, NSJSONWritingPrettyPrinted, errorRef);

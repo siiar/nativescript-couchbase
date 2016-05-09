@@ -53,7 +53,6 @@ export class ListDemo extends Observable {
 
   private refresh() {
     var rows = this.database.executeQuery("people");
-
     for (var i in rows) {
       if (rows.hasOwnProperty(i)) {
         this.personList.push(JSON.parse(rows[i]));
