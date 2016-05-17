@@ -1,0 +1,10 @@
+<ActionBar title="People">
+		<ActionItem text="Create" (tap)="create()" ios.position="right"></ActionItem>
+</ActionBar>
+<ListView [items]="people">
+    <template let-item="item">
+        <StackLayout>
+            <Label [text]="(item.firstname + ' ' + item.lastname)" ></Label>
+        </StackLayout>
+    </template>
+</ListView>
