@@ -16,8 +16,8 @@ export class ListDemo extends Observable {
       emitter.emit(JSON.parse(document)._id, document);
     });
 
-    var push = this.database.createPushReplication("http://localhost:4984/test-database");
-    var pull = this.database.createPullReplication("http://localhost:4984/test-database");
+    var push = this.database.createPushReplication("http://192.168.57.1:4984/test-database");
+    var pull = this.database.createPullReplication("http://192.168.57.1:4984/test-database");
 
     push.setContinuous(true);
     pull.setContinuous(true);

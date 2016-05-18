@@ -61,7 +61,7 @@ export class Couchbase {
       }
     }
 
-    deleteDocument(documentId){
+    deleteDocument(documentId: string){
       var document = this.database.documentWithID(documentId);
       var errorRef = new interop.Reference();
 
@@ -177,6 +177,14 @@ export class Replicator {
 
     start() {
         this.replicator.start();
+    }
+
+    stop() {
+        this.replicator.stop();
+    }
+
+    isRunning() {
+        this.replicator.isRunning;
     }
 
     setContinuous(isContinuous: boolean) {
