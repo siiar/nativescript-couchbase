@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ListService} from "../../shared/list.service";
-import {Router} from "@angular/router-deprecated";
+import {Router, RouteConfig, ROUTER_PROVIDERS, ROUTER_DIRECTIVES, ComponentInstruction} from '@angular/router-deprecated';
 
 @Component({
   selector: "list",
@@ -17,9 +17,17 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-     this._listService.load().forEach(document => {
-          this.people.unshift(document);
-     });
+    this.refresh();
+  }
+
+  refresh(){
+    this._listService.load().forEach(document => {
+         this.people.unshift(document);
+    });
+  }
+
+  routerOnActivate(nextInstruction: ComponentInstruction, prevInstruction: ComponentInstruction): any {
+      this.refresh();
   }
 
   create(){
