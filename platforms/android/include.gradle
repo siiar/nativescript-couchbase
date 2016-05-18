@@ -1,13 +1,10 @@
 repositories {
     jcenter()
-    flatDir {
-        dirs 'libs'
-    }
 }
 
 dependencies {
-    compile(name:'couchbase-lite-android-1.2.0', ext:'aar')
-    compile(name:'couchbase-lite-android-sqlite-default-1.2.0', ext:'aar')
+    compile 'com.couchbase.lite:couchbase-lite-android:1.2.0'
+    compile 'com.google.code.gson:gson:2.6.2'
 }
 
 android {
