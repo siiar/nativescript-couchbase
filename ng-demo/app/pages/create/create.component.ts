@@ -10,11 +10,15 @@ import {Location} from "@angular/common";
 
 export class CreateComponent implements OnInit {
   location: Location;
+  service: CreateService;
+
   firstname: string;
   lastname: string;
 
-  constructor(location: Location, private _service: CreateService) {
+  constructor(location: Location, service: CreateService) {
     this.location = location;
+    this.service = service;
+
     this.firstname = "";
     this.lastname = "";
   }
@@ -24,6 +28,10 @@ export class CreateComponent implements OnInit {
   }
 
   save(){
+    this.service.save({
+      firstname : this.firstname,
+      lastname : this.lastname
+    });
     this.location.back();
   }
 }
