@@ -1,7 +1,9 @@
 import applicationModule = require("application");
-import fs = require("file-system");
+//import fs = require("file-system");
+
 declare var com: any;
 declare var java: any;
+declare var android: any;
 
 export class Couchbase {
 
@@ -44,7 +46,7 @@ export class Couchbase {
         }
     }
 
-    deleteDocument(documentId) {
+    deleteDocument(documentId: string) {
         var document: any = this.database.getDocument(documentId);
         try {
             document.delete();
@@ -132,7 +134,7 @@ export class Couchbase {
         return JSON.parse(gson.toJson(data));
     }
 
-    private getPath(uri) {
+    /*private getPath(uri) {
         let cursor = applicationModule.android.currentContext.getContentResolver().query(uri, null, null, null, null);
         if (cursor == null) return null;
         let column_index = cursor.getColumnIndexOrThrow(android.provider.MediaStore.MediaColumns.DATA);
@@ -211,7 +213,7 @@ export class Couchbase {
             }
 
         })
-    }
+    }*/
 
 }
 
@@ -225,6 +227,14 @@ export class Replicator {
 
     start() {
         this.replicator.start();
+    }
+
+    stop() {
+        this.replicator.stop();
+    }
+
+    isRunning() {
+        return this.replicator.isRunning;
     }
 
     setContinuous(isContinuous: boolean) {
