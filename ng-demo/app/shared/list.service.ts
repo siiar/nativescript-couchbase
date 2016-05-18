@@ -6,7 +6,7 @@ var CouchbaseModule = require('nativescript-couchbase');
 
 @Injectable()
 export class ListService {
-    public people = new ObservableArray([])
+    public people = new ObservableArray([]);
     private database: any;
 
     constructor(){
@@ -61,6 +61,5 @@ export class ListService {
           this.people.push(JSON.parse(rows[i]));
         }
       }
-      return this.people;
     }
 }

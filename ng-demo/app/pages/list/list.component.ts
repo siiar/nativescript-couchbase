@@ -1,6 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {ListService} from "../../shared/list.service";
 import {Router, RouteConfig, ROUTER_PROVIDERS, ROUTER_DIRECTIVES, ComponentInstruction} from '@angular/router-deprecated';
+import {ObservableArray} from 'data/observable-array';
+
 
 @Component({
   selector: "list",
@@ -9,11 +11,16 @@ import {Router, RouteConfig, ROUTER_PROVIDERS, ROUTER_DIRECTIVES, ComponentInstr
 })
 
 export class ListComponent implements OnInit {
-  people: Array<any> = [];
   router: Router;
+  service: ListService;
+
+  get people(): any {
+      return this.service.people;
+  }
 
   constructor(router: Router, private _listService: ListService) {
       this.router = router
+      this.service = _listService;
   }
 
   ngOnInit() {
@@ -21,14 +28,11 @@ export class ListComponent implements OnInit {
   }
 
   refresh(){
-    this._listService.load().forEach(document => {
-         this.people.unshift(document);
-    });
+    this.service.load();
   }
 
-  routerOnActivate(nextInstruction: ComponentInstruction, prevInstruction: ComponentInstruction): any {
-      this.refresh();
-  }
+  // routerOnActivate(nextInstruction: ComponentInstruction, prevInstruction: ComponentInstruction): any {
+  // }
 
   create(){
       this.router.navigate(['Create']);
