@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ListService} from "../../shared/list.service";
-
+import {Router} from "@angular/router-deprecated";
 
 @Component({
   selector: "list",
@@ -8,16 +8,21 @@ import {ListService} from "../../shared/list.service";
   providers: [ListService]
 })
 
-export class ListPage implements OnInit {
+export class ListComponent implements OnInit {
   people: Array<any> = [];
+  router: Router;
 
-  constructor(private _listService: ListService) {}
+  constructor(router: Router, private _listService: ListService) {
+      this.router = router
+  }
 
   ngOnInit() {
-    this._listService.load()
+     this._listService.load().forEach(document => {
+          this.people.unshift(document);
+     });
   }
 
   create(){
-
+      this.router.navigate(['Create']);
   }
 }
