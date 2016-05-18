@@ -1,6 +1,6 @@
-﻿button, label, stack-layout {
-    horizontal-align: center;    
-}
+﻿/*button, label, stack-layout {
+    horizontal-align: center;
+}*/
 
 button {
     font-size: 36;
@@ -16,4 +16,4 @@ button {
     color: #284848;
     text-align: center;
     margin: 0 20;
-} 
+}
