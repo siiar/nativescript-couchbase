@@ -77,10 +77,10 @@ export class Couchbase {
     executeQuery(viewName: string) {
         var query = this.database.getView(viewName).createQuery();
         var result = query.run();
-        var parsedResult: Object = {};
-        while (result.hasNext()) {
+        var parsedResult: Array<any> = [];
+        while(result.hasNext()) {
             var row = result.next();
-            parsedResult[row.getKey()] = row.getValue();
+            parsedResult.push(JSON.parse(row.getValue()));
         }
         return parsedResult;
     }
