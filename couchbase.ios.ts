@@ -83,7 +83,7 @@ export class Couchbase {
         }, viewRevision);
     }
 
-    executeQuery(viewName: string) {
+    executeQuery(viewName: string): Array<any> {
       var view = this.database.viewNamed(viewName);
       var query = view.createQuery();
       var errorRef = new interop.Reference();
@@ -91,17 +91,17 @@ export class Couchbase {
 
       var row = resultSet.nextRow();
 
-      var results = []
-      var index = 0;
+      var results: Array<any> = [];
 
       while(row){
-         results[row.key] = row.value;
+         results.push(JSON.parse(row.value));
          row = resultSet.nextRow();
        }
 
        if (!errorRef){
            console.log(errorRef.value);
        }
+
        return results;
     }
 
