@@ -1,6 +1,6 @@
 {
   "name": "nativescript-couchbase",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Couchbase Lite plugin for Telerik NativeScript",
   "main": "couchbase.js",
   "nativescript": {
@@ -11,10 +11,16 @@
   },
   "scripts": {
     "build": "tsc",
-    "demo.ios": "npm run preparedemo; cd demo; tns emulate ios",
-    "demo.android": "npm run preparedemo; cd demo; tns emulate android",
-    "preparedemo": "npm run build; cd demo; tns plugin remove nativescript-couchbase; tns plugin add ..; tns install",
-    "setup": "cd demo; npm install; cd ..; npm run build; cd demo; tns plugin add ..; cd .."
+    "setup-angular": "cd ng-demo; npm install; cd ..; npm run build; cd ng-demo; tns plugin add ..; cd ..",
+    "setup-vanilla": "cd demo; npm install; cd ..; npm run build; cd demo; tns plugin add ..; cd ..",
+    "setup": "npm run setup-vanilla; npm run setup-angular",
+    "prepare-angular": "npm run build; cd ng-demo; tns plugin remove nativescript-couchbase; tns plugin add ..; tns install",
+    "prepare-vanilla": "npm run build; cd demo; tns plugin remove nativescript-couchbase; tns plugin add ..; tns install",
+    "prepare": "npm run prepare-vanilla; npm run prepare-angular",
+    "android-angular": "npm run prepare-angular; cd ng-demo; tns run android",
+    "android-vanilla": "npm run prepare-vanilla; cd demo; tns run android",
+    "ios-angular": "npm run prepare-angular; cd ng-demo; tns emulate ios",
+    "ios-vanilla": "npm run prepare-vanilla; cd demo; tns emulate ios"
   },
   "repository": {
     "type": "git",

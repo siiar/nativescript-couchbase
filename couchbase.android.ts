@@ -69,7 +69,8 @@ export class Couchbase {
         var self = this;
         view.setMap(new com.couchbase.lite.Mapper({
             map(document, emitter) {
-                callback(self.mapToJson(document), emitter);
+                let e = new Emitter(emitter);
+                callback(JSON.parse(self.mapToJson(document)), e);
             }
         }), viewRevision);
     }
@@ -80,7 +81,7 @@ export class Couchbase {
         var parsedResult: Array<any> = [];
         while(result.hasNext()) {
             var row = result.next();
-            parsedResult.push(JSON.parse(row.getValue()));
+            parsedResult.push(this.mapToObject(row.getValue()));
         }
         return parsedResult;
     }
@@ -239,6 +240,25 @@ export class Replicator {
 
     setContinuous(isContinuous: boolean) {
         this.replicator.setContinuous(isContinuous);
+    }
+
+}
+
+export class Emitter {
+
+    public emitter: any;
+
+    constructor(emitter: any) {
+        this.emitter = emitter;
+    }
+
+    emit(key: Object, value: Object) {
+        if(typeof value === "object") {
+            var gson = (new com.google.gson.GsonBuilder()).create();
+            this.emitter.emit(key, gson.fromJson(JSON.stringify(value), (new java.util.HashMap).getClass()));
+        } else {
+            this.emitter.emit(key, value);
+        }
     }
 
 }

@@ -13,11 +13,11 @@ export class ListService {
       //this.people = new ObservableArray([]);
       this.database = new CouchbaseModule.Couchbase("test-database");
       this.database.createView("people", "1", (document, emitter) => {
-        emitter.emit(JSON.parse(document)._id, document);
+        emitter.emit(document._id, document);
       });
 
-      var push = this.database.createPushReplication("http://localhost:4984/test-database");
-      var pull = this.database.createPullReplication("http://localhost:4984/test-database");
+      var push = this.database.createPushReplication("http://192.168.57.1:4984/test-database");
+      var pull = this.database.createPullReplication("http://192.168.57.1:4984/test-database");
 
       push.setContinuous(true);
       pull.setContinuous(true);
@@ -56,10 +56,9 @@ export class ListService {
 
     load(){
       var rows = this.database.executeQuery("people");
-      for (var i in rows) {
-        if (rows.hasOwnProperty(i)) {
-          this.people.push(JSON.parse(rows[i]));
-        }
+      this.people.splice(0, this.people.length);
+      for(var i = 0; i < rows.length; i++) {
+          this.people.push(rows[i]);
       }
     }
 }
