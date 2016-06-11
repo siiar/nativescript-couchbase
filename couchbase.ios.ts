@@ -83,9 +83,26 @@ export class Couchbase {
         }, viewRevision);
     }
 
-    executeQuery(viewName: string): Array<any> {
+    executeQuery(viewName: string, options?: any): Array<any> {
       var view = this.database.viewNamed(viewName);
       var query = view.createQuery();
+      if(options != null) {
+          if(options.descending) {
+              query.descending = options.descending;
+          }
+          if(options.limit) {
+              query.limit = options.limit;
+          }
+          if(options.skip) {
+              query.skip = options.skip;
+          }
+          if(options.startKey) {
+              query.startKey = options.startKey;
+          }
+          if(options.endKey) {
+              query.endKey = options.endKey;
+          }
+      }
       var errorRef = new interop.Reference();
       var resultSet = query.run(errorRef);
 
@@ -173,6 +190,7 @@ export class Couchbase {
       }
       return result;
     }
+
 }
 
 export class Replicator {

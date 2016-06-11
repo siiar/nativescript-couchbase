@@ -75,8 +75,25 @@ export class Couchbase {
         }), viewRevision);
     }
 
-    executeQuery(viewName: string) {
+    executeQuery(viewName: string, options?: any) {
         var query = this.database.getView(viewName).createQuery();
+        if(options != null) {
+            if(options.descending) {
+                query.setDescending(options.descending);
+            }
+            if(options.limit) {
+                query.setLimit(options.limit);
+            }
+            if(options.skip) {
+                query.setSkip(options.skip);
+            }
+            if(options.startKey) {
+                query.setStartKey(options.startKey);
+            }
+            if(options.endKey) {
+                query.setEndKey(options.endKey);
+            }
+        }
         var result = query.run();
         var parsedResult: Array<any> = [];
         while(result.hasNext()) {

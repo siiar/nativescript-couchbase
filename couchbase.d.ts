@@ -8,7 +8,7 @@ declare module "nativescript-couchbase" {
         deleteDocument(documentId: string);
         destroyDatabase();
         createView(viewName: string, viewRevision: string, callback: any);
-        executeQuery(viewName: string);
+        executeQuery(viewName: string, options?: any);
         createPullReplication(remoteUrl: string);
         createPushReplication(remoteUrl: string);
         addDatabaseChangeListener(callback: any);
