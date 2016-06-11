@@ -77,9 +77,9 @@ export class Couchbase {
         var self = this;
         var view = this.database.viewNamed(viewName)
         view.setMapBlockVersion(function(document, emit){
-              callback(self.mapToJson(document), {
-                  emit : emit
-              });
+            callback(JSON.parse(self.mapToJson(document)), {
+                emit: emit
+            });
         }, viewRevision);
     }
 
@@ -94,7 +94,13 @@ export class Couchbase {
       var results: Array<any> = [];
 
       while(row){
-         results.push(JSON.parse(row.value));
+          if(row.value !== null) {
+              if(typeof row.value === "object") {
+                  results.push(JSON.parse(this.mapToJson(row.value)));
+              } else {
+                  results.push(row.value);
+              }
+          }
          row = resultSet.nextRow();
        }
 
@@ -158,12 +164,14 @@ export class Couchbase {
 
     private mapToJson(properties: Object){
       var errorRef = new interop.Reference();
-
-      var data = NSJSONSerialization.dataWithJSONObjectOptionsError(properties, NSJSONWritingPrettyPrinted, errorRef);
-
-      var jsonString = NSString.alloc().initWithDataEncoding(data, NSUTF8StringEncoding)
-
-      return jsonString;
+      var result = "";
+      if(NSJSONSerialization.isValidJSONObject(properties)) {
+          var data = NSJSONSerialization.dataWithJSONObjectOptionsError(properties, NSJSONWritingPrettyPrinted, errorRef);
+          result = NSString.alloc().initWithDataEncoding(data, NSUTF8StringEncoding);
+      } else {
+          result = JSON.stringify(properties);
+      }
+      return result;
     }
 }
 
