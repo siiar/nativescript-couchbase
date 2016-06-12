@@ -27,10 +27,10 @@ export class Couchbase {
           console.log(errorRef.value);
         }
     }
-    createDocument(data: Object){
-        var doc = this.database.createDocument();
+    createDocument(data: Object, documentId?: string){
+        var doc = documentId == null ? this.database.createDocument() : this.database.documentWithID(documentId);
 
-        var documentId = doc.documentID;
+        var documentId: string = doc.documentID;
 
         var errorRef = new interop.Reference();
         var revision  = doc.putPropertiesError(data, errorRef);

@@ -21,8 +21,8 @@ export class Couchbase {
         }
     }
 
-    createDocument(data: Object) {
-        var document: any = this.database.createDocument();
+    createDocument(data: Object, documentId?: string) {
+        var document: any = documentId == null ? this.database.createDocument() : this.database.getDocument(documentId);
         var documentId: string = document.getId();
         try {
             document.putProperties(this.objectToMap(data));
