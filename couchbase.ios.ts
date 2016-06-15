@@ -4,7 +4,6 @@ declare var NSURL: any;
 declare var NSNotificationCenter: any;
 declare var NSOperationQueue: any;
 declare var NSJSONSerialization: any;
-declare var kCBLDatabaseChangeNotification: any;
 declare var NSString: any;
 declare var NSJSONWritingPrettyPrinted: any;
 declare var NSUTF8StringEncoding: any;
@@ -154,7 +153,7 @@ export class Couchbase {
 
     addDatabaseChangeListener(callback: any) {
       var self = this;
-      NSNotificationCenter.defaultCenter().addObserverForNameObjectQueueUsingBlock(kCBLDatabaseChangeNotification, null,NSOperationQueue.mainQueue(), function(notification){
+      NSNotificationCenter.defaultCenter().addObserverForNameObjectQueueUsingBlock(`CBLDatabaseChange`, null,NSOperationQueue.mainQueue(), function(notification){
             var changesList = [];
             if (notification.userInfo){
               var changes = notification.userInfo.objectForKey("changes");
