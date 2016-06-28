@@ -1,7 +1,6 @@
+// this import should be first in order to load some required settings (like globals and reflect-metadata)
 import {nativeScriptBootstrap} from "nativescript-angular/application";
 import {AppComponent} from "./app.component";
-import {setStatusBarColors} from "./utils/status-bar-util";
+import {CouchbaseInstance} from "./couchbaseinstance";
 
-setStatusBarColors();
-
-nativeScriptBootstrap(AppComponent, null, { startPageActionBarHidden: false });
+nativeScriptBootstrap(AppComponent, [CouchbaseInstance], { startPageActionBarHidden: false });
