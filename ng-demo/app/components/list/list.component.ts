@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {Router} from "@angular/router-deprecated";
+import {Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {CouchbaseInstance} from "../../couchbaseinstance";
 
@@ -45,19 +45,19 @@ export class ListComponent {
     }
 
     create() {
-        this.router.navigate(["Create"]);
+        this.router.navigate(["/create"]);
     }
 
     private refresh() {
         this.personList = [];
-        var rows = this.database.executeQuery("people");
-        for(var i = 0; i < rows.length; i++) {
+        let rows = this.database.executeQuery("people");
+        for(let i = 0; i < rows.length; i++) {
             this.personList.push(rows[i]);
         }
     }
 
     private indexOfObjectId(needle: string, haystack: any) {
-        for (var i = 0; i < haystack.length; i++) {
+        for (let i = 0; i < haystack.length; i++) {
             if (haystack[i] != undefined && haystack[i].hasOwnProperty("_id")) {
                 if (haystack[i]._id == needle) {
                     return i;
