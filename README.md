@@ -27,6 +27,14 @@ npm run ios-angular
 npm run ios-vanilla
 ```
 
+If you're using TypeScript and wish to make use of the type definitions for this plugin, add the following line to your project's **references.d.ts** file:
+
+```
+/// <reference path="./node_modules/nativescript-couchbase/couchbase.d.ts" />
+```
+
+Without the above line included, your TypeScript compiler may throw errors during the build.
+
 ## Usage
 
 ### Including the Plugin in Your Project
