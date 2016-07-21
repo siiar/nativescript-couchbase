@@ -21,8 +21,8 @@ export class CouchbaseInstance {
     }
 
     startSync(continuous: boolean) {
-        this.push = this.database.createPushReplication("http://192.168.57.1:4984/test-database");
-        this.pull = this.database.createPullReplication("http://192.168.57.1:4984/test-database");
+        this.push = this.database.createPushReplication("http://192.168.58.1:4984/test-database");
+        this.pull = this.database.createPullReplication("http://192.168.58.1:4984/test-database");
 
         this.push.setContinuous(continuous);
         this.pull.setContinuous(continuous);

@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, NgZone} from "@angular/core";
 import {Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {CouchbaseInstance} from "../../couchbaseinstance";
@@ -11,29 +11,30 @@ export class ListComponent {
 
     private database: any;
     private router: Router;
+    private ngZone: NgZone;
     public personList: Array<Object>;
 
-    constructor(router: Router, location: Location, couchbaseInstance: CouchbaseInstance) {
+    constructor(router: Router, location: Location, ngZone: NgZone, couchbaseInstance: CouchbaseInstance) {
         this.router = router;
+        this.ngZone = ngZone;
         this.database = couchbaseInstance.getDatabase();
         this.personList = [];
 
         couchbaseInstance.startSync(true);
 
         this.database.addDatabaseChangeListener((changes) => {
-            var changeIndex;
+            let changeIndex;
             for (var i = 0; i < changes.length; i++) {
-                var documentId;
-
-                documentId = changes[i].getDocumentId();
+                let documentId = changes[i].getDocumentId();
                 changeIndex = this.indexOfObjectId(documentId, this.personList);
-                var document = this.database.getDocument(documentId);
-
-                if (changeIndex == -1) {
-                    this.personList.push(document);
-                } else {
-                    this.personList[changeIndex] = document;
-                }
+                let document = this.database.getDocument(documentId);
+                this.ngZone.run(() => {
+                    if (changeIndex == -1) {
+                        this.personList.push(document);
+                    } else {
+                        this.personList[changeIndex] = document;
+                    }
+                });
             }
         });
 
