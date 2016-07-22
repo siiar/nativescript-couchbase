@@ -1,6 +1,6 @@
 <Page loaded="pageLoaded">
     <Page.actionBar>
-		<ActionBar title="People">
+		<ActionBar title="TypeScript Demo">
 			<ActionBar.actionItems>
 				<ActionItem text="Create" tap="{{ create }}" ios.position="right" />
 			</ActionBar.actionItems>

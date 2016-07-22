@@ -4,16 +4,36 @@ Couchbase Lite is a NoSQL embedded database for mobile devices.  It is a replace
 
 ## Configuration
 
-Because this plugin is experimental, it has not yet been added to the NPM repository.  After downloading this repository, either through direct download or cloning, do the following:
+To add this plugin to your Angular 2 or vanilla JavaScript NativeScript project, execute the following from the Terminal or Command Prompt:
 
 ```
-cd nativescript-couchbase-plugin/demo
-npm install
-tns platform add android
 tns plugin add nativescript-couchbase
 ```
 
-This will download all the dependencies for the included demo project, add the Android build platform, and install the Couchbase plugin from the parent directory.
+If you wish to try either of the demo applications that are bundled with this project, execute the following after cloning the repository:
+
+```
+npm run setup
+npm run prepare
+npm run android-angular
+```
+
+For the third line, the list of options are:
+
+```
+npm run android-angular
+npm run android-vanilla
+npm run ios-angular
+npm run ios-vanilla
+```
+
+If you're using TypeScript and wish to make use of the type definitions for this plugin, add the following line to your project's **references.d.ts** file:
+
+```
+/// <reference path="./node_modules/nativescript-couchbase/couchbase.d.ts" />
+```
+
+Without the above line included, your TypeScript compiler may throw errors during the build.
 
 ## Usage
 
@@ -78,7 +98,7 @@ A MapReduce View will emit a key-value pair.  Logic can be placed around the **e
 
 ```javascript
 database.createView("people", "1", function(document, emitter) {
-    emitter.emit(JSON.parse(document)._id, document);
+    emitter.emit(document._id, document);
 });
 ```
 
@@ -86,10 +106,8 @@ database.createView("people", "1", function(document, emitter) {
 
 ```javascript
 var rows = database.executeQuery("people");
-for(var i in rows) {
-    if(rows.hasOwnProperty(i)) {
-        personList.push(JSON.parse(rows[i]));
-    }
+for(var i = 0; i < rows.length; i++) {
+    personList.push(rows[i]);
 }
 ```
 

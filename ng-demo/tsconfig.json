@@ -2,10 +2,10 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es5",
-        "inlineSourceMap": true,
+        "sourceMap": true,
         "experimentalDecorators": true,
-        "removeComments": false,
         "emitDecoratorMetadata": true,
+        "noEmitHelpers": true,
         "noEmitOnError": true
     },
     "exclude": [

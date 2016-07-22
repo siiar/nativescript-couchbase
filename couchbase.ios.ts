@@ -4,7 +4,6 @@ declare var NSURL: any;
 declare var NSNotificationCenter: any;
 declare var NSOperationQueue: any;
 declare var NSJSONSerialization: any;
-declare var kCBLDatabaseChangeNotification: any;
 declare var NSString: any;
 declare var NSJSONWritingPrettyPrinted: any;
 declare var NSUTF8StringEncoding: any;
@@ -27,10 +26,10 @@ export class Couchbase {
           console.log(errorRef.value);
         }
     }
-    createDocument(data: Object){
-        var doc = this.database.createDocument();
+    createDocument(data: Object, documentId?: string){
+        var doc = documentId == null ? this.database.createDocument() : this.database.documentWithID(documentId);
 
-        var documentId = doc.documentID;
+        var documentId: string = doc.documentID;
 
         var errorRef = new interop.Reference();
         var revision  = doc.putPropertiesError(data, errorRef);
@@ -77,31 +76,54 @@ export class Couchbase {
         var self = this;
         var view = this.database.viewNamed(viewName)
         view.setMapBlockVersion(function(document, emit){
-              callback(self.mapToJson(document), {
-                  emit : emit
-              });
+            callback(JSON.parse(self.mapToJson(document)), {
+                emit: emit
+            });
         }, viewRevision);
     }
 
-    executeQuery(viewName: string) {
+    executeQuery(viewName: string, options?: any): Array<any> {
       var view = this.database.viewNamed(viewName);
       var query = view.createQuery();
+      if(options != null) {
+          if(options.descending) {
+              query.descending = options.descending;
+          }
+          if(options.limit) {
+              query.limit = options.limit;
+          }
+          if(options.skip) {
+              query.skip = options.skip;
+          }
+          if(options.startKey) {
+              query.startKey = options.startKey;
+          }
+          if(options.endKey) {
+              query.endKey = options.endKey;
+          }
+      }
       var errorRef = new interop.Reference();
       var resultSet = query.run(errorRef);
 
       var row = resultSet.nextRow();
 
-      var results = []
-      var index = 0;
+      var results: Array<any> = [];
 
       while(row){
-         results[row.key] = row.value;
+          if(row.value !== null) {
+              if(typeof row.value === "object") {
+                  results.push(JSON.parse(this.mapToJson(row.value)));
+              } else {
+                  results.push(row.value);
+              }
+          }
          row = resultSet.nextRow();
        }
 
        if (!errorRef){
            console.log(errorRef.value);
        }
+
        return results;
     }
 
@@ -131,7 +153,7 @@ export class Couchbase {
 
     addDatabaseChangeListener(callback: any) {
       var self = this;
-      NSNotificationCenter.defaultCenter().addObserverForNameObjectQueueUsingBlock(kCBLDatabaseChangeNotification, null,NSOperationQueue.mainQueue(), function(notification){
+      NSNotificationCenter.defaultCenter().addObserverForNameObjectQueueUsingBlock(`CBLDatabaseChange`, null,NSOperationQueue.mainQueue(), function(notification){
             var changesList = [];
             if (notification.userInfo){
               var changes = notification.userInfo.objectForKey("changes");
@@ -158,13 +180,16 @@ export class Couchbase {
 
     private mapToJson(properties: Object){
       var errorRef = new interop.Reference();
-
-      var data = NSJSONSerialization.dataWithJSONObjectOptionsError(properties, NSJSONWritingPrettyPrinted, errorRef);
-
-      var jsonString = NSString.alloc().initWithDataEncoding(data, NSUTF8StringEncoding)
-
-      return jsonString;
+      var result = "";
+      if(NSJSONSerialization.isValidJSONObject(properties)) {
+          var data = NSJSONSerialization.dataWithJSONObjectOptionsError(properties, NSJSONWritingPrettyPrinted, errorRef);
+          result = NSString.alloc().initWithDataEncoding(data, NSUTF8StringEncoding);
+      } else {
+          result = JSON.stringify(properties);
+      }
+      return result;
     }
+
 }
 
 export class Replicator {

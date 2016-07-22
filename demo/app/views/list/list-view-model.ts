@@ -13,7 +13,7 @@ export class ListDemo extends Observable {
     this.database = new Couchbase("test-database");
 
     this.database.createView("people", "1", (document, emitter) => {
-      emitter.emit(JSON.parse(document)._id, document);
+      emitter.emit(document._id, document);
     });
 
     var push = this.database.createPushReplication("http://192.168.57.1:4984/test-database");
@@ -26,8 +26,6 @@ export class ListDemo extends Observable {
     pull.start();
 
     this.database.addDatabaseChangeListener((changes) => {
-      console.log(changes);
-
       var changeIndex;
       for (var i = 0; i < changes.length; i++) {
         var documentId;
@@ -53,10 +51,8 @@ export class ListDemo extends Observable {
 
   private refresh() {
     var rows = this.database.executeQuery("people");
-    for (var i in rows) {
-      if (rows.hasOwnProperty(i)) {
-        this.personList.push(JSON.parse(rows[i]));
-      }
+    for(var i = 0; i < rows.length; i++) {
+        this.personList.push(rows[i]);
     }
   }
 
