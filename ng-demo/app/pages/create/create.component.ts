@@ -25,9 +25,7 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
 
-  }
-
-  
+  }  
 
   save(){
     this.service.save({
