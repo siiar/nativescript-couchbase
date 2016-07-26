@@ -43,7 +43,7 @@ export class Couchbase {
 
     getDocument(documentId: string){
         var document = this.database.documentWithID(documentId);
-        if (document){
+        if (document && document.properties){
           return  JSON.parse(this.mapToJson(document.properties));
         }
         return null;
