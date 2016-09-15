@@ -8,8 +8,6 @@ demo/lib
 ng-demo/platforms
 ng-demo/lib
 
-dist/
-
 npm_debug.log
 
 .DS_Store*
