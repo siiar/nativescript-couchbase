@@ -153,7 +153,7 @@ export class Couchbase {
 
     addDatabaseChangeListener(callback: any) {
       var self = this;
-      NSNotificationCenter.defaultCenter().addObserverForNameObjectQueueUsingBlock(`CBLDatabaseChange`, null,NSOperationQueue.mainQueue(), function(notification){
+      NSNotificationCenter.defaultCenter.addObserverForNameObjectQueueUsingBlock(`CBLDatabaseChange`, null,NSOperationQueue.mainQueue, function(notification){
             var changesList = [];
             if (notification.userInfo){
               var changes = notification.userInfo.objectForKey("changes");
