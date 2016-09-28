@@ -8,6 +8,8 @@ declare var NSString: any;
 declare var NSJSONWritingPrettyPrinted: any;
 declare var NSUTF8StringEncoding: any;
 
+import * as utils from "utils/utils";
+
 export class Couchbase {
 
     private manager: any;
@@ -153,7 +155,9 @@ export class Couchbase {
 
     addDatabaseChangeListener(callback: any) {
       var self = this;
-      NSNotificationCenter.defaultCenter.addObserverForNameObjectQueueUsingBlock(`CBLDatabaseChange`, null,NSOperationQueue.mainQueue, function(notification){
+      let defaultCenter = utils.ios.getter(NSNotificationCenter, NSNotificationCenter.defaultCenter)
+      let mainQueue = utils.ios.getter(NSOperationQueue, NSOperationQueue.mainQueue)
+      defaultCenter.addObserverForNameObjectQueueUsingBlock(`CBLDatabaseChange`, null,mainQueue, function(notification){
             var changesList = [];
             if (notification.userInfo){
               var changes = notification.userInfo.objectForKey("changes");
