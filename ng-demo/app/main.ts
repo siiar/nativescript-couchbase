@@ -1,15 +1,23 @@
-import {nativeScriptBootstrap} from "nativescript-angular/application";
-import {RouterConfig} from "@angular/router";
-import {nsProvideRouter} from "nativescript-angular/router";
-import {AppComponent} from "./app.component";
-import {CouchbaseInstance} from "./couchbaseinstance";
+// this import should be first in order to load some required settings (like globals and reflect-metadata)
+import { platformNativeScriptDynamic, NativeScriptModule } from "nativescript-angular/platform";
+import { NgModule } from "@angular/core";
+import { NativeScriptRouterModule } from "nativescript-angular/router";
+import { NativeScriptFormsModule } from 'nativescript-angular/forms';
+import { appRoutes, appComponents } from "./app.routing";
+import { AppComponent } from "./app.component";
+import { CouchbaseInstance } from "./couchbaseinstance";
 
-import {ListComponent} from "./components/list/list.component";
-import {CreateComponent} from "./components/create/create.component";
+@NgModule({
+    declarations: [AppComponent, ...appComponents],
+    bootstrap: [AppComponent],
+    imports: [
+        NativeScriptModule,
+        NativeScriptFormsModule,
+        NativeScriptRouterModule, 
+        NativeScriptRouterModule.forRoot(appRoutes)
+    ],
+    providers: [CouchbaseInstance]
+})
+class AppComponentModule {}
 
-export const AppRoutes: RouterConfig = [
-    { path: "", component: ListComponent },
-    { path: "create", component: CreateComponent }
-]
-
-nativeScriptBootstrap(AppComponent, [CouchbaseInstance, [nsProvideRouter(AppRoutes, {})]]);
+platformNativeScriptDynamic().bootstrapModule(AppComponentModule);
