@@ -152,8 +152,18 @@ export class Couchbase {
     }
 
     addDatabaseChangeListener(callback: any) {
-      var self = this;
-      NSNotificationCenter.defaultCenter.addObserverForNameObjectQueueUsingBlock(`CBLDatabaseChange`, null,NSOperationQueue.mainQueue, function(notification){
+        var self = this;
+        function getter<T>(_this: any, property: T | {(): T}): T {
+            if (typeof property === "function") {
+                return (<{(): T}>property).call(_this);
+            } else {
+                return <T>property;
+            }
+        }
+
+        let defaultCenter = getter(NSNotificationCenter, NSNotificationCenter.defaultCenter)
+        let mainQueue = getter(NSOperationQueue, NSOperationQueue.mainQueue)
+        defaultCenter.addObserverForNameObjectQueueUsingBlock(`CBLDatabaseChange`, null,mainQueue, function(notification){
             var changesList = [];
             if (notification.userInfo){
               var changes = notification.userInfo.objectForKey("changes");
@@ -223,7 +233,6 @@ export class Replicator {
     deleteCookie(name: String) {
       this.replicator.deleteCookieNamed(name);
     }
-
 }
 
 export class DatabaseChange {

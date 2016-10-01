@@ -1,6 +1,6 @@
 {
   "name": "nativescript-couchbase",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Couchbase Lite plugin for Telerik NativeScript",
   "main": "couchbase.js",
   "nativescript": {

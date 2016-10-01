@@ -5,7 +5,7 @@ import {CouchbaseInstance} from "../../couchbaseinstance";
 
 @Component({
     selector: "my-app",
-    templateUrl: "components/list/list.component.html",
+    templateUrl: "./components/list/list.component.html",
 })
 export class ListComponent {
 
@@ -46,7 +46,7 @@ export class ListComponent {
     }
 
     create() {
-        this.router.navigate(["/create"]);
+        this.router.navigate(["create"]);
     }
 
     private refresh() {
