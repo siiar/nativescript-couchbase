@@ -261,7 +261,7 @@ export class Replicator {
 
     setCookie(name: String, value: String, path: String, expirationDate: Date, secure: boolean, httpOnly: boolean) {
         let date = new java.util.Date(expirationDate.getTime());
-        this.replicator.setCookieNamedWithValuePathExpirationDateSecure(name, value, path, date, secure, httpOnly);
+        this.replicator.setCookie(name, value, path, date, secure, httpOnly);
     };
 
     deleteCookie(name: String) {
