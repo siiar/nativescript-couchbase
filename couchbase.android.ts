@@ -259,13 +259,14 @@ export class Replicator {
         this.replicator.setContinuous(isContinuous);
     }
 
-    setCookie(name: String, value: String, path: String, expirationDate: Date, secure: boolean) {
-        this.replicator.setCookieNamedWithValuePathExpirationDateSecure(name, value, path, expirationDate, secure);
+    setCookie(name: String, value: String, path: String, expirationDate: Date, secure: boolean, httpOnly: boolean) {
+        let date = new java.util.Date(expirationDate.getTime());
+        this.replicator.setCookie(name, value, path, date, secure, httpOnly);
     };
 
     deleteCookie(name: String) {
       this.replicator.deleteCookieNamed(name);
-    }    
+    }
 
 }
 

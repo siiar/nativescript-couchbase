@@ -227,7 +227,7 @@ export class Replicator {
     }
 
     setCookie(name: String, value: String, path: String, expirationDate: Date, secure: boolean) {
-        this.replicator.setCookieNamedWithValuePathExpirationDateSecure(name, value, path, expirationDate, secure);
+      this.replicator.setCookieNamedWithValuePathExpirationDateSecure(name, value, path, expirationDate, secure);
     };
 
     deleteCookie(name: String) {
