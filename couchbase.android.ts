@@ -1,4 +1,4 @@
-import applicationModule = require("application");
+import * as  utils from "utils/utils";
 //import fs = require("file-system");
 
 declare var com: any;
@@ -12,7 +12,7 @@ export class Couchbase {
     private database: any;
 
     constructor(databaseName: string) {
-        this.context = applicationModule.android.context;
+        this.context = utils.ad.getApplicationContext();
         try {
             this.manager = new com.couchbase.lite.Manager(new com.couchbase.lite.android.AndroidContext(this.context), null);
             this.database = this.manager.getDatabase(databaseName);
