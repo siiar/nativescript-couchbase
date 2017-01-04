@@ -1,6 +1,6 @@
 {
   "name": "nativescript-couchbase",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Couchbase Lite plugin for Telerik NativeScript",
   "main": "couchbase.js",
   "nativescript": {
@@ -33,6 +33,9 @@
     "nosql",
     "nativescript"
   ],
-  "author": "Nic Raboy",
+  "author": {
+      "name": "Nic Raboy",
+      "url": "https://www.thepolyglotdeveloper.com"
+  },
   "license": "Apache-2.0"
 }

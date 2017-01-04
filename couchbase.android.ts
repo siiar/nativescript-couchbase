@@ -37,8 +37,11 @@ export class Couchbase {
         return JSON.parse(this.mapToJson(document.getProperties()));
     }
 
-    updateDocument(documentId: string, data: Object) {
-        var document: any = this.database.getDocument(documentId);
+    updateDocument(documentId: string, data: any) {
+        let document: any = this.database.getDocument(documentId);
+        let temp: any = JSON.parse(this.mapToJson(document.getProperties()));
+        data._id = temp._id;
+        data._rev = temp._rev;
         try {
             document.putProperties(this.objectToMap(data));
         } catch (exception) {

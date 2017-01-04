@@ -49,9 +49,11 @@ export class Couchbase {
         return null;
     }
 
-    updateDocument(documentId: string, data: Object){
+    updateDocument(documentId: string, data: any){
       var document = this.database.documentWithID(documentId);
-
+      let temp: any = this.getDocument(documentId);
+      data._id = temp._id;
+      data._rev = temp._rev;
       var errorRef = new interop.Reference();
       var revision  = document.putPropertiesError(data, errorRef);
 
