@@ -165,7 +165,7 @@ export class Couchbase {
 
         let defaultCenter = getter(NSNotificationCenter, NSNotificationCenter.defaultCenter)
         let mainQueue = getter(NSOperationQueue, NSOperationQueue.mainQueue)
-        defaultCenter.addObserverForNameObjectQueueUsingBlock(`CBLDatabaseChange`, null,mainQueue, function(notification){
+        defaultCenter.addObserverForNameObjectQueueUsingBlock(`CBLDatabaseChange`, this.database, mainQueue, function(notification){
             var changesList = [];
             if (notification.userInfo){
               var changes = notification.userInfo.objectForKey("changes");
