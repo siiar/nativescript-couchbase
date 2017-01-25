@@ -2,7 +2,8 @@
   "name": "nativescript-couchbase",
   "version": "1.0.16",
   "description": "Couchbase Lite plugin for Telerik NativeScript",
-  "main": "couchbase.js",
+  "main": "couchbase",
+  "typings": "couchbase.d.ts",
   "nativescript": {
     "platforms": {
       "android": "2.0.0",
