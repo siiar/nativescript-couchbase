@@ -4,7 +4,7 @@ Couchbase Lite is a NoSQL embedded database for mobile devices.  It is a replace
 
 ## Configuration
 
-To add this plugin to your Angular 2 or vanilla JavaScript NativeScript project, execute the following from the Terminal or Command Prompt:
+To add this plugin to your Angular or vanilla JavaScript NativeScript project, execute the following from the Terminal or Command Prompt:
 
 ```
 tns plugin add nativescript-couchbase

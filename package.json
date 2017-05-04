@@ -1,45 +1,50 @@
 {
-  "name": "nativescript-couchbase",
-  "version": "1.0.17",
-  "description": "Couchbase Lite plugin for Telerik NativeScript",
-  "main": "couchbase",
-  "typings": "couchbase.d.ts",
-  "nativescript": {
-    "platforms": {
-      "android": "2.5.0",
-      "ios": "2.5.0"
+    "name": "nativescript-couchbase",
+    "version": "1.0.18",
+    "description": "Couchbase Lite plugin for Telerik NativeScript",
+    "main": "couchbase",
+    "typings": "couchbase.d.ts",
+    "nativescript": {
+        "platforms": {
+            "android": "3.0.0",
+            "ios": "3.0.0"
+        }
+    },
+    "scripts": {
+        "prepare": "echo \"Preparing...\"; npm run build;",
+        "build": "echo \"Building...\"; tsc;",
+        "configure": "echo \"Configuring...\"; npm run configure-vanilla; npm run configure-angular;",
+        "configure-vanilla": "echo \"Configuring Vanilla...\"; cd demo; tns install; tns plugin remove nativescript-couchbase; tns plugin add ..; cd ..",
+        "configure-angular": "echo \"Configuring Angular...\"; cd ng-demo; tns install; tns plugin remove nativescript-couchbase; tns plugin add ..; cd ..",
+        "deploy-android-angular": "echo \"Deploying Android Angular...\"; npm run configure-angular; cd ng-demo; tns run android",
+        "deploy-android-vanilla": "echo \"Deploying Android Vanilla...\"; npm run configure-vanilla; cd demo; tns run android",
+        "deploy-ios-angular": "echo \"Deploying iOS Angular...\"; npm run configure-angular; cd ng-demo; tns run ios",
+        "deploy-ios-vanilla": "echo \"Deploying iOS Vanilla...\"; npm run configure-vanilla; cd demo; tns run ios",
+        "webpack-vanilla": "echo \"Webpacking Vanilla...\"; npm run configure; cd demo; npm run webpack-ios; npm run webpack-android; cd ..;",
+        "webpack-angular": "echo \"Webpacking Angular...\"; npm run configure; cd ng-demo; npm run webpack-ios; npm run webpack-android; cd ..;"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/couchbaselabs/nativescript-couchbase.git"
+    },
+    "keywords": [
+        "couchbase",
+        "couchbase mobile",
+        "couchbase lite",
+        "nosql",
+        "nativescript"
+    ],
+    "author": {
+        "name": "Nic Raboy",
+        "url": "https://www.thepolyglotdeveloper.com"
+    },
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "tns-core-modules": "^3.0.0",
+        "tns-platform-declarations": "^3.0.0",
+        "typescript": "^2.2.2"
+    },
+    "peerDependencies": {
+        "tns-core-modules": "^3.0.0"
     }
-  },
-  "scripts": {
-    "prepare": "echo \"Preparing...\"; npm run build;",
-    "build": "echo \"Building...\"; tsc;",
-    "configure": "echo \"Configuring...\"; npm run configure-vanilla; npm run configure-angular;",
-    "configure-vanilla": "echo \"Configuring Vanilla...\"; cd demo; tns install; tns plugin remove nativescript-couchbase; tns plugin add ..; cd ..",
-    "configure-angular": "echo \"Configuring Angular...\"; cd ng-demo; tns install; tns plugin remove nativescript-couchbase; tns plugin add ..; cd ..",
-    "deploy-android-angular": "echo \"Deploying Android Angular...\"; npm run configure-angular; cd ng-demo; tns run android",
-    "deploy-android-vanilla": "echo \"Deploying Android Vanilla...\"; npm run configure-vanilla; cd demo; tns run android",
-    "deploy-ios-angular": "echo \"Deploying iOS Angular...\"; npm run configure-angular; cd ng-demo; tns run ios",
-    "deploy-ios-vanilla": "echo \"Deploying iOS Vanilla...\"; npm run configure-vanilla; cd demo; tns run ios",
-    "webpack-vanilla": "echo \"Webpacking Vanilla...\"; npm run configure; cd demo; npm run webpack-ios; npm run webpack-android; cd ..;",
-    "webpack-angular": "echo \"Webpacking Angular...\"; npm run configure; cd ng-demo; npm run webpack-ios; npm run webpack-android; cd ..;"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/couchbaselabs/nativescript-couchbase.git"
-  },
-  "keywords": [
-    "couchbase",
-    "couchbase mobile",
-    "couchbase lite",
-    "nosql",
-    "nativescript"
-  ],
-  "author": {
-    "name": "Nic Raboy",
-    "url": "https://www.thepolyglotdeveloper.com"
-  },
-  "license": "Apache-2.0",
-  "devDependencies": {
-    "tns-core-modules": "^2.5.0"
-  }
 }

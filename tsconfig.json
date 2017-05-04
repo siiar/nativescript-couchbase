@@ -1,16 +1,31 @@
 {
     "compilerOptions": {
-        "target": "ES5",
         "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "preserveConstEnums": true,
         "sourceMap": false,
-        "emitDecoratorMetadata": true,
+        "declaration": false,
+        "noLib": false,
+        "noEmitHelpers": true,
         "experimentalDecorators": true,
-        "removeComments": false,
-        "noImplicitAny": false
+        "lib": [
+            "es6",
+            "dom"
+        ],
+        "baseUrl": ".",
+        "paths": {
+            "*": [
+                "./node_modules/tns-core-modules/*",
+                "./node_modules/*"
+            ]
+        }
     },
-    "files": [
-        "node_modules/tns-core-modules/tns-core-modules.d.ts",
-        "couchbase.android.ts",
-        "couchbase.ios.ts"
+    "exclude": [
+        "node_modules",
+        "platforms",
+        "demo",
+        "ng-demo"
     ]
 }
