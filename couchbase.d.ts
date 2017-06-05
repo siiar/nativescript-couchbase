@@ -12,6 +12,7 @@ declare module "nativescript-couchbase" {
         createPullReplication(remoteUrl: string);
         createPushReplication(remoteUrl: string);
         addDatabaseChangeListener(callback: any);
+        siiarTest(text:string);
     }
 
 }
